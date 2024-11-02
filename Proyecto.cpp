@@ -71,11 +71,23 @@ void menu_movie(){
                 getline(cin,name);
                 cout<<"Año de lanzamiento\n";
                 cin>>year;
+                //manejo de errores y verificacion d datos.
+                if (year < 1888 || year > 2024) {
+                    cout << "Año invalido. Introduzca un año entre 1888 y 2024.\n";
+                    return;
+                }
+
                 cin.ignore(1000,'\n');
                 cout<<"Genero de la pelicula\n";
                 getline(cin,genre);
                 cout<<"Duracion de la pelicula (minutos)\n";
                 cin>>length;
+                //manejo de errores y verificacion d datos. mael
+                    if (length <= 0) {
+                        cout << "Longitud no válida. Por favor ingrese una longitud positiva.\n";
+                        return;
+                    }
+
                 insert_movie(Movie, name, year, genre, length);
                 break;
 
@@ -86,6 +98,8 @@ void menu_movie(){
                 getline(cin,name);
                 delete_a_movie(Movie,name);
                 break;
+        default:   //manejo de errores y verificacion d datos. mael
+        cout << "Opcion Invalida. Porfavor intente denuevo.\n";
 
     }
 }
@@ -98,7 +112,7 @@ void insert_movie(Movies *&Movie, string n, int yr, string g, int l){
     new_movie -> length = l;
     Movies *aux1 = Movie;
     Movies *aux2;
-
+    
     while(aux1 != NULL){
         aux2 = aux1;
         aux1 = aux1 -> next;
@@ -111,6 +125,7 @@ void insert_movie(Movies *&Movie, string n, int yr, string g, int l){
         aux2 -> next = new_movie;
     }
     new_movie -> next = aux1;
+    
 }
 
 void show_movies(Movies *Movie){
